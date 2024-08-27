@@ -1,0 +1,138 @@
+# ------------------  INPUTS TO MAIN PROGRAM  -------------------
+#stop_time = 10000.0
+stop_time = 200000.0
+
+amrex.fpe_trap_invalid = 0
+
+fabarray.mfiter_tile_size = 1024 1024 1024
+
+# PROBLEM SIZE & GEOMETRY
+#geometry.prob_extent = 250000. 250000. 5000.
+#amr.n_cell           = 40      40      200
+# storm radius (100km) + buffer (50km)
+geometry.prob_lo = -200000. -200000.  0.
+geometry.prob_hi =  200000.  200000.  9999 # zhi not used with grid stretching
+amr.n_cell       =  80       80       42
+
+erf.grid_stretching_ratio = 1.1
+erf.initial_dz = 20.0
+
+#geometry.is_periodic = 1 1 0
+xlo.type = "Outflow"
+ylo.type = "Outflow"
+xhi.type = "Outflow"
+yhi.type = "Outflow"
+#xlo.type = "Open" # no appreciable difference compared with plain old outflow
+#ylo.type = "Open"
+#xhi.type = "Open"
+#yhi.type = "Open"
+
+zlo.type = "Most"
+erf.use_explicit_most   = 1
+#erf.most.z0              = 0.001 # NOT USED OVER WATER
+erf.most.surf_temp       = 300.5
+erf.most.zref            = 10.
+erf.is_land = 0
+#erf.most.roughness_type_sea = "charnock" # set erf.is_land=0 to activate
+#erf.most.charnock_constant = -1 # use variable charnock parameter (COARE3.0)
+#erf.most.charnock_viscosity = true # (COARE3.0)
+erf.most.roughness_type_sea = "donelan" # set erf.is_land=0 to activate
+
+erf.most.average_policy = 1 # local averaging
+#erf.most.radius = 0 # local averaging -- this is integer grid units
+
+erf.most.include_wstar = 1 # enable Beljaars correction
+erf.most.pblh_calc = "MYNN2.5" # for most.include_wstar
+
+zhi.type = "SlipWall"
+
+# TIME STEP CONTROL
+erf.fixed_dt           = 5.0
+#erf.fixed_dt           = 10.0 # NANs
+#erf.fixed_mri_dt_ratio = 6 # NANs
+
+# DIAGNOSTICS & VERBOSITY
+erf.sum_interval   = 1       # timesteps between computing mass
+erf.v              = 1       # verbosity in ERF.cpp
+amr.v              = 1      # verbosity in Amr.cpp
+#erf.data_log       = "surf"
+
+# REFINEMENT / REGRIDDING
+amr.max_level       = 0       # maximum level number allowed
+
+# CHECKPOINT FILES
+erf.check_file      = chk        # root name of checkpoint file
+erf.check_int       = 1000       # number of timesteps between checkpoints
+#erf.check_int       = 100
+#erf.check_int       = 10
+
+# PLOTFILES
+#erf.plotfile_type   = netcdf
+erf.plot_file_1     = plt        # prefix of plotfile name
+erf.plot_int_1      = 200        # number of timesteps between plotfiles
+erf.plot_vars_1     = density x_velocity y_velocity z_velocity pressure theta QKE Kmv Khv
+
+# SOLVER CHOICE
+erf.use_gravity = true
+erf.pbl_type = "MYNN2.5"
+erf.les_type = "None"
+erf.molec_diff_type = "None"
+#erf.molec_diff_type  = "Constant"
+#erf.dynamicViscosity = 0.0 # 5.0
+#erf.Cs = 0.16
+
+erf.dycore_horiz_adv_type  = "Upwind_5th"
+erf.dycore_vert_adv_type   = "Upwind_3rd"
+erf.dryscal_horiz_adv_type = "Upwind_5th"
+erf.dryscal_vert_adv_type  = "Upwind_3rd"
+#erf.dryscal_horiz_adv_type = "WENO5"
+#erf.dryscal_vert_adv_type  = "WENO3"
+
+erf.use_coriolis = true
+erf.coriolis_3d = false
+erf.latitude = 20.
+erf.rotational_time_period = 86164.0900027328
+
+# PROBLEM PARAMETERS
+# not used:
+#prob.rho_0 = 1.0
+#prob.T_0   = 300.0
+# initial vortex
+prob.RZERO = 100e3
+prob.ZZERO = 5e3
+prob.RMAX  = 20e3
+prob.VMAX  = 15.
+prob.QKE_0 = 0.5
+#prob.QKE_0 = 0.001
+
+# erf.use_xlo_sponge_damping = true
+# erf.use_ylo_sponge_damping = true
+# erf.use_xhi_sponge_damping = true
+# erf.use_yhi_sponge_damping = true
+# #erf.xlo_sponge_end   =  25000.
+# #erf.ylo_sponge_end   =  25000.
+# #erf.xhi_sponge_start = 175000.
+# #erf.yhi_sponge_start = 175000.
+# erf.xlo_sponge_end   =  50000.
+# erf.ylo_sponge_end   =  50000.
+# erf.xhi_sponge_start = 150000.
+# erf.yhi_sponge_start = 150000.
+# #erf.sponge_strength = 1.0 # ~ 1/dt
+# erf.sponge_strength = 0.02 # ~ 1/(100dt)
+# erf.sponge_use_basestate = true
+# erf.sponge_damp_temperature = true
+# erf.sponge_x_velocity = 0.0
+# erf.sponge_y_velocity = 0.0
+# erf.sponge_z_velocity = 0.0
+
+erf.rayleigh_damp_W = true
+prob.dampcoef = 0.2
+prob.zdamp = 5000.
+
+# INITIALIZATION WITH ATM DATA
+erf.init_type = "input_sounding"
+erf.init_sounding_ideal = 1
+#erf.input_sounding_file = "input_sounding_meso"
+#erf.input_sounding_file = "input_sounding_meso0_with_inversion" # runs for a while
+#erf.input_sounding_file = "input_sounding_meso0" # crash after step 1
+erf.input_sounding_file = "input_sounding_NEW" # more realistic

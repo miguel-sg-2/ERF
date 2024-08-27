@@ -1,5 +1,5 @@
 # AMReX
-COMP = gnu
+COMP = cray #gnu
 PRECISION = DOUBLE
 
 # Profiling

@@ -30,7 +30,7 @@ Problem::Problem()
   pp.query("W_0", parms.W_0);
   pp.query("dampcoef", parms.dampcoef);
   pp.query("zdamp", parms.zdamp);
-  init_base_parms(parms.rho_0, parms.T_0);
+//  init_base_parms(parms.rho_0, parms.T_0);
 }
 
 void

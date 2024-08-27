@@ -7,9 +7,9 @@ amrex.fpe_trap_invalid = 1
 fabarray.mfiter_tile_size = 1024 1024 1024
 
 # PROBLEM SIZE & GEOMETRY
-geometry.prob_extent = 200000. 200000. 5000.
-amr.n_cell           = 40      40      67 #200  
-erf.grid_stretching_ratio = 1.05
+geometry.prob_extent = 500000. 500000. 15000.
+amr.n_cell           = 100     100      69 #200  
+erf.grid_stretching_ratio = 1.07
 erf.initial_dz = 10
 
 geometry.is_periodic = 1 1 0
@@ -46,7 +46,7 @@ erf.restart_type    = "native"
 # PLOTFILES
 erf.plotfile_type   = hdf5 # netcdf
 erf.plot_file_1     = plt        # prefix of plotfile name
-erf.plot_int_1      = 5000        # number of timesteps between plotfiles
+erf.plot_int_1      = 500        # number of timesteps between plotfiles
 erf.plot_vars_1     = density rhotheta rhoQKE x_velocity y_velocity z_velocity pressure temp theta QKE pres_hse
 
 # SOLVER CHOICE
@@ -75,6 +75,8 @@ erf.rayleigh_damp_V = true
 erf.rayleigh_damp_W = true
 erf.rayleigh_damp_T = true
 
+#erf.moisture_model = "FastEddy"
+
 # SPONGE ZONE BCS
 #erf.sponge_strength = 10000.0
 #erf.use_xlo_sponge_damping = true
@@ -92,17 +94,17 @@ erf.rayleigh_damp_T = true
 # PROBLEM PARAMETERS (optional)
 prob.rho_0 = 1.0
 prob.T_0   = 300.0
-prob.Xc_0  = 100000
-prob.Yc_0  = 100000
+prob.Xc_0  = 250000 #100000
+prob.Yc_0  = 250000 #100000
 prob.VMAX  = 15
-prob.RMAX  = 20000
-prob.RZERO = 80000
-prob.ZZERO = 3000
+prob.RMAX  = 82000
+prob.RZERO = 200000 #80000
+prob.ZZERO = 10000
 prob.dampcoef = 0.02 # Rayleigh damping coefficient
-prob.zdamp = 1500 # depth of Rayleigh damping layer
+prob.zdamp = 3000 # depth of Rayleigh damping layer
 prob.QKE_0 = 0.5
 
 # INITIALIZATION WITH ATM DATA
 erf.init_type = "input_sounding"
 erf.init_sounding_ideal = 1
-erf.input_sounding_file = "input_sounding_meso"
+erf.input_sounding_file = "input_sounding_idealHurr"

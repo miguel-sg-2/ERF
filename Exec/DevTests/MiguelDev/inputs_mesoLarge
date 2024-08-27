@@ -7,9 +7,9 @@ amrex.fpe_trap_invalid = 1
 fabarray.mfiter_tile_size = 1024 1024 1024
 
 # PROBLEM SIZE & GEOMETRY
-geometry.prob_extent = 200000. 200000. 5000.
-amr.n_cell           = 40      40      67 #200  
-erf.grid_stretching_ratio = 1.05
+geometry.prob_extent = 500000. 500000. 15000.
+amr.n_cell           = 100     100      69 #200  
+erf.grid_stretching_ratio = 1.07
 erf.initial_dz = 10
 
 geometry.is_periodic = 1 1 0
@@ -92,14 +92,14 @@ erf.rayleigh_damp_T = true
 # PROBLEM PARAMETERS (optional)
 prob.rho_0 = 1.0
 prob.T_0   = 300.0
-prob.Xc_0  = 100000
-prob.Yc_0  = 100000
+prob.Xc_0  = 250000 #100000
+prob.Yc_0  = 250000 #100000
 prob.VMAX  = 15
-prob.RMAX  = 20000
-prob.RZERO = 80000
-prob.ZZERO = 3000
+prob.RMAX  = 82000
+prob.RZERO = 200000 #80000
+prob.ZZERO = 10000
 prob.dampcoef = 0.02 # Rayleigh damping coefficient
-prob.zdamp = 1500 # depth of Rayleigh damping layer
+prob.zdamp = 3000 # depth of Rayleigh damping layer
 prob.QKE_0 = 0.5
 
 # INITIALIZATION WITH ATM DATA

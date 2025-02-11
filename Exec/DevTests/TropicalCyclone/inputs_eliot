@@ -1,8 +1,9 @@
 # ------------------  INPUTS TO MAIN PROGRAM  -------------------
 #stop_time = 10000.0
+max_step  = 100000
 stop_time = 200000.0
 
-amrex.fpe_trap_invalid = 0
+amrex.fpe_trap_invalid = 1 #0
 
 fabarray.mfiter_tile_size = 1024 1024 1024
 
@@ -67,7 +68,7 @@ erf.check_int       = 1000       # number of timesteps between checkpoints
 #erf.check_int       = 10
 
 # PLOTFILES
-#erf.plotfile_type   = netcdf
+erf.plotfile_type   = hdf5 # netcdf
 erf.plot_file_1     = plt        # prefix of plotfile name
 erf.plot_int_1      = 200        # number of timesteps between plotfiles
 erf.plot_vars_1     = density x_velocity y_velocity z_velocity pressure theta QKE Kmv Khv
